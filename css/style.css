@@ -194,6 +194,13 @@ span {
   }
 }
 
+#container {
+  min-width: 310px;
+  height: 400px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
 #map {
   display: block;
   height: 100%;

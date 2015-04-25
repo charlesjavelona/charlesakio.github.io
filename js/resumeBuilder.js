@@ -1,15 +1,16 @@
-var bio = {};
-bio.name = "Charles Javelona";
-bio.role = "Front-end Ninja";
-bio.contacts = {
-	"email": "charlesjavelona@gmail.com",
-	"github": "charlesakio",
-	"twitter": "@charlesjavelona",
-	"location": "Mississauga, Ontario, Canada"
+var bio = {
+	"name": "Charles Javelona",
+	"role": "Front-end Ninja",
+	"contacts": {
+		"email": "charlesjavelona@gmail.com",
+		"github": "charlesakio",
+		"twitter": "@charlesjavelona",
+		"location": "Mississauga, Ontario, Canada"
+		},
+	"welcomeMsg": "``Welcome to my interactive resume, created using Javascript``",
+	"skills": ["Python", "Django", "Flask", "Front-end"],
+	"bioPic": "images/business.portrait.jpg",
 };
-bio.welcomeMsg = "``Welcome to my interactive resume, created using Javascript``";
-bio.skills = ["Python", "Django", "Flask", "Front-end"];
-bio.bioPic = "images/business.portrait.jpg";
 
 //2.)Bio and education for referrence, 
 //check https://www.udacity.com/course/viewer#!/c-ud804-nd/l-1930528550/e-1935058561/m-1952638584
@@ -152,52 +153,53 @@ var projects = {
 
 
 ///////////////////////////////////////////
-//Calling the objects and it's properties//
+//Modularize code by creating functions //
 //////////////////////////////////////////
 
-//Access the bio name and display them in the index.html page
-var formattedName = HTMLheaderName.replace("%data%", bio.name);
-//Access the bio role and display them in the index.html page!!!!!
-var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
-//Access the welcome message and display it in the index.html page
-var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMsg)
-//Access the picture and display it in the index.html page
-var formattedbioPic = HTMLbioPic.replace("%data%", bio.bioPic);
+bio.display = function() {
+	//Access the bio name and display them in the index.html page
+	var formattedName = HTMLheaderName.replace("%data%", bio.name);
+	//Access the bio role and display them in the index.html page!!!!!
+	var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+	//Access the welcome message and display it in the index.html page
+	var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMsg)
+	//Access the picture and display it in the index.html page
+	var formattedbioPic = HTMLbioPic.replace("%data%", bio.bioPic);
 
-var formattedContactInfo = [];
-formattedContactInfo.push(HTMLemail.replace("%data%", bio.contacts.email));
-formattedContactInfo.push(HTMLtwitter.replace("%data%", bio.contacts.twitter));
-formattedContactInfo.push(HTMLgithub.replace("%data%", bio.contacts.github));
-formattedContactInfo.push(HTMLlocation.replace("%data%", bio.contacts.location));
+	var formattedContactInfo = [];
+	formattedContactInfo.push(HTMLemail.replace("%data%", bio.contacts.email));
+	formattedContactInfo.push(HTMLtwitter.replace("%data%", bio.contacts.twitter));
+	formattedContactInfo.push(HTMLgithub.replace("%data%", bio.contacts.github));
+	formattedContactInfo.push(HTMLlocation.replace("%data%", bio.contacts.location));
 
 
-//Append the objects in their respective classes and tags
-//Prepend is use for name and role because it organizes contacts
-$("#header").prepend(formattedRole);
-$("#header").prepend(formattedName);
-$("#header").append(formattedWelcomeMsg);
-$("#header").append(formattedbioPic);
+	//Append the objects in their respective classes and tags
+	//Prepend is use for name and role because it organizes contacts
+	$("#header").prepend(formattedRole);
+	$("#header").prepend(formattedName);
+	$("#header").append(formattedWelcomeMsg);
+	$("#header").append(formattedbioPic);
 
-// Access the object bio and add all the skills in bio.skills array.
-if(bio.skills.length > 0) {
-	$("#header").append(HTMLskillsStart);
+	// Access the object bio and add all the skills in bio.skills array.
+	if(bio.skills.length > 0) {
+		$("#header").append(HTMLskillsStart);
 
-	for(skill in bio.skills) {
-		$("#skills").append(HTMLskills.replace("%data%", bio.skills[skill]));
+		for(skill in bio.skills) {
+			$("#skills").append(HTMLskills.replace("%data%", bio.skills[skill]));
+		}
+	}
 
+	//Access the array object formattedContactInfo and append the objects 
+	for(contact in formattedContactInfo) {
+		$("#topContacts").append(formattedContactInfo[contact]);
+		$("#footerContacts").append(formattedContactInfo[contact]);
 	}
 }
 
-//Access the array object formattedContactInfo and append the objects in 
-for(contact in formattedContactInfo) {
-	$("#topContacts").append(formattedContactInfo[contact]);
-	$("#footerContacts").append(formattedContactInfo[contact]);
-}
+//Define function projects.display(), it displays the Work objects 
+work.display = function() {
 
-//Define function displayWork, it displays the Work objects 
-function displayWork() {
-
-//Write a for-in loop that iterates jobs
+	//Write a for-in loop that iterates jobs
 	for(job in work.jobs) {
 		$("#workExperience").append(HTMLworkStart);
 
@@ -240,7 +242,7 @@ projects.display = function() {
 }
 
 //Define function displayEducation, and display the Eduaction objects
-function displayEducation() {
+education.display = function() {
 	if(education.schools.length > 0) {
 		for(school in education.schools) {
 			$("#education").append(HTMLschoolStart);
@@ -292,19 +294,21 @@ function clickMetrics() {
 ///Calling the functions section//
 //////////////////////////////////
 
-//Execute displayWork
-displayWork();
+//Execute bio.display();
+bio.display();
 
-//Execute displayProject()
+//Execute work.display();
+work.display();
+
+//Execute projects.display();
 projects.display();
 
-//Execute displayEducation()
-displayEducation();
+//Execute education.display();
+education.display();
 
 //Execute clickMetrics()
 clickMetrics();
 
-//Add internalize button inName
 
 //Add google maps
 $("#mapDiv").append(googleMap);
