@@ -7,9 +7,9 @@ bio.contacts = {
 	"twitter": "@charlesjavelona",
 	"location": "Mississauga, Ontario, Canada"
 };
-bio.welcomeMsg = "Welcome to my interactive resume, created using Javascript";
-bio.skills = ["awesomeness", "world dominator", "leader", "front-end ninja"];
-bio.bioPic = "images/fry.jpg";
+bio.welcomeMsg = "``Welcome to my interactive resume, created using Javascript``";
+bio.skills = ["Python", "Django", "Flask", "Front-end"];
+bio.bioPic = "images/business.portrait.jpg";
 
 //2.)Bio and education for referrence, 
 //check https://www.udacity.com/course/viewer#!/c-ud804-nd/l-1930528550/e-1935058561/m-1952638584
@@ -26,23 +26,23 @@ var education = {
   ],
 	"onlineCourses": [
 	{
-		"title": "Web development",
+		"title": "Front-end Nanodegree",
 		"school": "Udacity",
-		"dates": "2014",
-		"url": "https://udacity.com"
+		"dates": "2015",
+		"url": "https://www.udacity.com/nanodegree"
 	},
 	{
 		"title": "LFS101x: Introduction to Linux",
 		"school": "Linux Foundation",
-		"dates": "2014",
+		"dates": "2015",
 		"url": "https://verify.edx.org/cert/ba2913c463f04223831c9172ec9beae3"
 	},
 	{
-		"title": "Front-end Nanodegree",
+		"title": "Web development",
 		"school": "Udacity",
-		"dates": "2015",
-		"url": "https://udacity.com"
-	}
+		"dates": "2014",
+		"url": "https://www.udacity.com/course/web-development--cs253"
+	},
   ]
 }
 
@@ -51,40 +51,101 @@ var work = {
 	"jobs": [
 	{
 		"employer": "Blackberry",
-		"title": "Beta Software Analyst",
-		"dates": "January 2015",
+		"title": "Beta Software Analyst(Intern)",
+		"dates": "January 2015 - April 2015 (4 months)",
 		"location": "Waterloo, Ontario, Canada",
 		"description": "Analyse bug reports and then triaged them to appropriate software development teams"
 	},
 	{
 		"employer": "Udacity",
 		"title": "Code Reviewer",
-		"dates": "February 2015",
+		"dates": "February 2015 - Present",
 		"location": "MountainView, California, USA",
 		"description": "Reviewed student submitted project and provided them with feedback to improve code skills" 
-	}
+	},
+	{
+		"employer": "Max of Manila Restaurant",
+		"title": "Management Trainee/Marketing Coordinator",
+		"dates": "2012 - 2013",
+		"location": "Vaughn, Ontario, Canada",
+		"description": "Stepped in numerous role such as dishwasher, busboy, cashier, " +
+		"server, stock manager, vendor negotiator, marketing coordinator " +
+		"to learn different aspects of the restaurant so that I understand how to manage colleagues at work." 
+	},
+	{
+		"employer": "San Miguel Canada Corporation",
+		"title": "Marketing Executive",
+		"dates": "2012 - 2013",
+		"location": "Vaughn, Ontario, Canada",
+		"description": "The first employee of a startup beer company, basically organized and attended beer show events." 
+	},
+	{
+		"employer": "Advanced Basketball Canada",
+		"title": "Assistant Basketball Coach",
+		"dates": "2011 - 2014",
+		"location": "Oakville, Ontario, Canada",
+		"description": "Assisted in coaching youth to highschool kids for basketball camps and games." 
+	},
+	{
+		"employer": "City of Missisauga",
+		"title": "Youth Basketball Coach",
+		"dates": "2007 - 2012",
+		"location": "Missisauga, Ontario, Canada",
+		"description": "Planned, organized, and executed activities to enhance and teach basketball skills to youths attending camp." 
+	},
+	{
+		"employer": "City of Missisauga",
+		"title": "Program Leader",
+		"dates": "2007 - 2012",
+		"location": "Missisauga, Ontario, Canada",
+		"description": "Organized, facilitated, and executed activities that the community center provided for their recreation and leisure seeking customers." 
+	},
+	{
+		"employer": "City of Missisauga",
+		"title": "Sports Referee",
+		"dates": "2007 - 2012",
+		"location": "Missisauga, Ontario, Canada",
+		"description": "Officiated sports games such as, dodgeball, basketball, volleyball." 
+	},
   ]
 }
 
 var projects = {
 	"projects": [
 	{ 
+		"title": "Portfolio",
+		"dates": 2015,
+		"description": "Created an online portfolio of work as part of Udacity's Front-End Web Developer Nanodegree.",
+		"images": ["images/portfolio.jpg"],
+		"url": "https://github.com/charlesakio/portfolio/tree/master/udacity_portfolio"
+	},
+	{ 
+		"title": "Flask blog",
+		"dates": 2015,
+		"description": "Taught myself Flask by creating a basic blog app.",
+		"images": ["images/flask.jpg"],
+		"url": "http://charlesjavelona.pythonanywhere.com/"
+	},
+	{ 
 		"title": "Blog engine",
-		"dates": "2014",
+		"dates": 2014,
 		"description": "Created a basic content management system using Python",
-		"images": ["images/blogShot.jpg"]
+		"images": ["images/blogShot.jpg"],
+		"url": "http://charlesjavelona.appspot.com/blog"
 	},
 	{ 
 		"title": "Wiki engine",
 		"dates": 2014,
 		"description": "Built a website from scratch that can mimic wikipedia using Python",
-		"images": ["images/wikiShot.jpg"] 
+		"images": ["images/wikiShot.jpg"], 
+		"url": "http://buildawiki.appspot.com/"
 	},
 	{ 
 		"title": "Toastmasters club",
 		"dates": 2014,
 		"description": "A club that I started in my school aimed to enhance members communication skills",
-		"images": ["images/toastShot.jpg"]
+		"images": ["images/toastShot.jpg"],
+		"url": "http://sbo.toastmastersclubs.org/"
 	}
   ]
 }
@@ -161,7 +222,7 @@ projects.display = function() {
 		for(project in projects.projects) {
 			$("#projects").append(HTMLprojectStart);
 
-			var formattedProjectTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title); 
+			var formattedProjectTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title).replace("#", projects.projects[project].url); 
 			var formattedProjectDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates); 
 			var formattedProjectDescription = HTMLprojectDescription.replace("%data%", projects.projects[project].description);
 
@@ -184,7 +245,7 @@ function displayEducation() {
 		for(school in education.schools) {
 			$("#education").append(HTMLschoolStart);
 
-			var formattedSchoolName = HTMLschoolName.replace("%data%", education.schools[school].name);
+			var formattedSchoolName = HTMLschoolName.replace("%data%", education.schools[school].name).replace("#", education.schools[school].url);
 			var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", education.schools[school].degree);
 			var formattedSchoolMajor = HTMLschoolMajor.replace("%data%", education.schools[school].major);
 			var formattedSchoolDates = HTMLschoolDates.replace("%data%", education.schools[school].dates);
@@ -202,10 +263,10 @@ function displayEducation() {
 		for(course in education.onlineCourses) {
 			$("#education").append(HTMLschoolStart);
 
-			var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[course].title);
+			var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[course].title).replace("#", education.onlineCourses[course].url);
 			var formattedOnlineSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[course].school);
 			var formattedOnlineDates = HTMLonlineDates.replace("%data%", education.onlineCourses[course].dates);
-			var formattedOnlineURL = HTMLonlineURL.replace("%data%", education.onlineCourses[course].url);
+			var formattedOnlineURL = HTMLonlineURL.replace("%data%", education.onlineCourses[course].url).replace("#", education.onlineCourses[course].url);
 
 			$(".education-entry:last").append(formattedOnlineTitle + formattedOnlineSchool);
 			$(".education-entry:last").append(formattedOnlineDates);
@@ -216,14 +277,6 @@ function displayEducation() {
 }
 
 
-//Define a function inName that takes a string of two names and returns
-// an internationalized version that looks like so: Charles JAVELONA
-function inName(name) {
-	var splitName = name.split();
-
-
-
-}
 
 //Define function clickMetrics that locates all user clicks
 function clickMetrics() { 
@@ -329,9 +382,9 @@ $(function () {
 				data: [[2014, 4], [2015, 4]]
 			},
 			{
-				name: 'SQL',
+				name: 'Flask',
 				color: 'rgba(119, 152, 80, .5)',
-				data: [[2014, 5]]
+				data: [[2015, 2]]
 			},
 			{
 				name: 'Javascript',
