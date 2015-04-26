@@ -10,6 +10,45 @@ var bio = {
 	"welcomeMsg": "``Welcome to my interactive resume, created using Javascript``",
 	"skills": ["Python", "Django", "Flask", "Front-end"],
 	"bioPic": "images/business.portrait.jpg",
+	"display": function() {
+		//Access the bio name and display them in the index.html page
+		var formattedName = HTMLheaderName.replace("%data%", bio.name);
+		//Access the bio role and display them in the index.html page!!!!!
+		var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+		//Access the welcome message and display it in the index.html page
+		var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMsg)
+		//Access the picture and display it in the index.html page
+		var formattedbioPic = HTMLbioPic.replace("%data%", bio.bioPic);
+
+		var formattedContactInfo = [];
+		formattedContactInfo.push(HTMLemail.replace("%data%", bio.contacts.email));
+		formattedContactInfo.push(HTMLtwitter.replace("%data%", bio.contacts.twitter));
+		formattedContactInfo.push(HTMLgithub.replace("%data%", bio.contacts.github));
+		formattedContactInfo.push(HTMLlocation.replace("%data%", bio.contacts.location));
+
+
+		//Append the objects in their respective classes and tags
+		//Prepend is use for name and role because it organizes contacts
+		$("#header").prepend(formattedRole);
+		$("#header").prepend(formattedName);
+		$("#header").append(formattedWelcomeMsg);
+		$("#header").append(formattedbioPic);
+
+		// Access the object bio and add all the skills in bio.skills array.
+		if(bio.skills.length > 0) {
+			$("#header").append(HTMLskillsStart);
+
+			for(skill in bio.skills) {
+				$("#skills").append(HTMLskills.replace("%data%", bio.skills[skill]));
+			}
+		}
+
+		//Access the array object formattedContactInfo and append the objects 
+		for(contact in formattedContactInfo) {
+			$("#topContacts").append(formattedContactInfo[contact]);
+			$("#footerContacts").append(formattedContactInfo[contact]);
+		}
+	}
 };
 
 //2.)Bio and education for referrence, 
@@ -44,8 +83,44 @@ var education = {
 		"dates": "2014",
 		"url": "https://www.udacity.com/course/web-development--cs253"
 	},
-  ]
-}
+  ],
+	  //Define function displayEducation, and display the Eduaction objects
+	"display": function() {
+		if(education.schools.length > 0) {
+			for(school in education.schools) {
+				$("#education").append(HTMLschoolStart);
+
+				var formattedSchoolName = HTMLschoolName.replace("%data%", education.schools[school].name).replace("#", education.schools[school].url);
+				var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", education.schools[school].degree);
+				var formattedSchoolMajor = HTMLschoolMajor.replace("%data%", education.schools[school].major);
+				var formattedSchoolDates = HTMLschoolDates.replace("%data%", education.schools[school].dates);
+				var formattedSchoolLocation = HTMLschoolLocation.replace("%data%", education.schools[school].location);
+
+				$(".education-entry:last").append(formattedSchoolName + formattedSchoolDegree);
+				$(".education-entry:last").append(formattedSchoolDates);
+				$(".education-entry:last").append(formattedSchoolLocation);
+				$(".education-entry:last").append(formattedSchoolMajor);
+			}
+		
+
+		if(education.onlineCourses.length > 0) {
+			$("#education").append(HTMLonlineClasses);
+			for(course in education.onlineCourses) {
+				$("#education").append(HTMLschoolStart);
+
+				var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[course].title).replace("#", education.onlineCourses[course].url);
+				var formattedOnlineSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[course].school);
+				var formattedOnlineDates = HTMLonlineDates.replace("%data%", education.onlineCourses[course].dates);
+				var formattedOnlineURL = HTMLonlineURL.replace("%data%", education.onlineCourses[course].url).replace("#", education.onlineCourses[course].url);
+
+				$(".education-entry:last").append(formattedOnlineTitle + formattedOnlineSchool);
+				$(".education-entry:last").append(formattedOnlineDates);
+				$(".education-entry:last").append(formattedOnlineURL);
+				}
+			}
+		}
+	}
+};
 
 //1.) Create work and project objects
 var work = {
@@ -108,8 +183,29 @@ var work = {
 		"location": "Missisauga, Ontario, Canada",
 		"description": "Officiated sports games such as, dodgeball, basketball, volleyball." 
 	},
-  ]
-}
+  ],
+  //Define function projects.display(), it displays the Work objects 
+	"display": function() {
+
+		//Write a for-in loop that iterates jobs
+		for(job in work.jobs) {
+			$("#workExperience").append(HTMLworkStart);
+
+			var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
+			var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
+			var formattedWorkDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
+			var formattedWorkLocation = HTMLworkLocation.replace("%data%", work.jobs[job].location);
+			var formattedWorkDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description);
+			
+			var formattedEmployerTitle = formattedWorkEmployer + formattedWorkTitle;
+
+			$(".work-entry:last").append(formattedEmployerTitle);
+			$(".work-entry:last").append(formattedWorkDates);
+			$(".work-entry:last").append(formattedWorkLocation);
+			$(".work-entry:last").append(formattedWorkDescription);
+		}
+	}
+};
 
 var projects = {
 	"projects": [
@@ -148,136 +244,30 @@ var projects = {
 		"images": ["images/toastShot.jpg"],
 		"url": "http://sbo.toastmastersclubs.org/"
 	}
-  ]
-}
+  ],
+  //Define function projects.display(), and display the Projects objects 
+	"display": function() {
+		if(projects.projects.length > 0) {
+			for(project in projects.projects) {
+				$("#projects").append(HTMLprojectStart);
 
+				var formattedProjectTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title).replace("#", projects.projects[project].url); 
+				var formattedProjectDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates); 
+				var formattedProjectDescription = HTMLprojectDescription.replace("%data%", projects.projects[project].description);
 
-///////////////////////////////////////////
-//Modularize code by creating functions //
-//////////////////////////////////////////
+				$(".project-entry:last").append(formattedProjectTitle);
+				$(".project-entry:last").append(formattedProjectDates);
+				$(".project-entry:last").append(formattedProjectDescription);
 
-bio.display = function() {
-	//Access the bio name and display them in the index.html page
-	var formattedName = HTMLheaderName.replace("%data%", bio.name);
-	//Access the bio role and display them in the index.html page!!!!!
-	var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
-	//Access the welcome message and display it in the index.html page
-	var formattedWelcomeMsg = HTMLwelcomeMsg.replace("%data%", bio.welcomeMsg)
-	//Access the picture and display it in the index.html page
-	var formattedbioPic = HTMLbioPic.replace("%data%", bio.bioPic);
+				for(image in projects.projects[project].images) {
+					var formattedProjectImage = HTMLprojectImage.replace("%data%", projects.projects[project].images[image]);
+					$(".project-entry:last").append(formattedProjectImage);
+				}
 
-	var formattedContactInfo = [];
-	formattedContactInfo.push(HTMLemail.replace("%data%", bio.contacts.email));
-	formattedContactInfo.push(HTMLtwitter.replace("%data%", bio.contacts.twitter));
-	formattedContactInfo.push(HTMLgithub.replace("%data%", bio.contacts.github));
-	formattedContactInfo.push(HTMLlocation.replace("%data%", bio.contacts.location));
-
-
-	//Append the objects in their respective classes and tags
-	//Prepend is use for name and role because it organizes contacts
-	$("#header").prepend(formattedRole);
-	$("#header").prepend(formattedName);
-	$("#header").append(formattedWelcomeMsg);
-	$("#header").append(formattedbioPic);
-
-	// Access the object bio and add all the skills in bio.skills array.
-	if(bio.skills.length > 0) {
-		$("#header").append(HTMLskillsStart);
-
-		for(skill in bio.skills) {
-			$("#skills").append(HTMLskills.replace("%data%", bio.skills[skill]));
-		}
-	}
-
-	//Access the array object formattedContactInfo and append the objects 
-	for(contact in formattedContactInfo) {
-		$("#topContacts").append(formattedContactInfo[contact]);
-		$("#footerContacts").append(formattedContactInfo[contact]);
-	}
-}
-
-//Define function projects.display(), it displays the Work objects 
-work.display = function() {
-
-	//Write a for-in loop that iterates jobs
-	for(job in work.jobs) {
-		$("#workExperience").append(HTMLworkStart);
-
-		var formattedWorkEmployer = HTMLworkEmployer.replace("%data%", work.jobs[job].employer);
-		var formattedWorkTitle = HTMLworkTitle.replace("%data%", work.jobs[job].title);
-		var formattedWorkDates = HTMLworkDates.replace("%data%", work.jobs[job].dates);
-		var formattedWorkLocation = HTMLworkLocation.replace("%data%", work.jobs[job].location);
-		var formattedWorkDescription = HTMLworkDescription.replace("%data%", work.jobs[job].description);
-		
-		var formattedEmployerTitle = formattedWorkEmployer + formattedWorkTitle;
-
-		$(".work-entry:last").append(formattedEmployerTitle);
-		$(".work-entry:last").append(formattedWorkDates);
-		$(".work-entry:last").append(formattedWorkLocation);
-		$(".work-entry:last").append(formattedWorkDescription);
-	}
-}
-
-//Define function displayProject, and display the Projects objects 
-projects.display = function() {
-	if(projects.projects.length > 0) {
-		for(project in projects.projects) {
-			$("#projects").append(HTMLprojectStart);
-
-			var formattedProjectTitle = HTMLprojectTitle.replace("%data%", projects.projects[project].title).replace("#", projects.projects[project].url); 
-			var formattedProjectDates = HTMLprojectDates.replace("%data%", projects.projects[project].dates); 
-			var formattedProjectDescription = HTMLprojectDescription.replace("%data%", projects.projects[project].description);
-
-			$(".project-entry:last").append(formattedProjectTitle);
-			$(".project-entry:last").append(formattedProjectDates);
-			$(".project-entry:last").append(formattedProjectDescription);
-
-			for(image in projects.projects[project].images) {
-				var formattedProjectImage = HTMLprojectImage.replace("%data%", projects.projects[project].images[image]);
-				$(".project-entry:last").append(formattedProjectImage);
-			}
-
-		}
-	}
-}
-
-//Define function displayEducation, and display the Eduaction objects
-education.display = function() {
-	if(education.schools.length > 0) {
-		for(school in education.schools) {
-			$("#education").append(HTMLschoolStart);
-
-			var formattedSchoolName = HTMLschoolName.replace("%data%", education.schools[school].name).replace("#", education.schools[school].url);
-			var formattedSchoolDegree = HTMLschoolDegree.replace("%data%", education.schools[school].degree);
-			var formattedSchoolMajor = HTMLschoolMajor.replace("%data%", education.schools[school].major);
-			var formattedSchoolDates = HTMLschoolDates.replace("%data%", education.schools[school].dates);
-			var formattedSchoolLocation = HTMLschoolLocation.replace("%data%", education.schools[school].location);
-
-			$(".education-entry:last").append(formattedSchoolName + formattedSchoolDegree);
-			$(".education-entry:last").append(formattedSchoolDates);
-			$(".education-entry:last").append(formattedSchoolLocation);
-			$(".education-entry:last").append(formattedSchoolMajor);
-		}
-	
-
-	if(education.onlineCourses.length > 0) {
-		$("#education").append(HTMLonlineClasses);
-		for(course in education.onlineCourses) {
-			$("#education").append(HTMLschoolStart);
-
-			var formattedOnlineTitle = HTMLonlineTitle.replace("%data%", education.onlineCourses[course].title).replace("#", education.onlineCourses[course].url);
-			var formattedOnlineSchool = HTMLonlineSchool.replace("%data%", education.onlineCourses[course].school);
-			var formattedOnlineDates = HTMLonlineDates.replace("%data%", education.onlineCourses[course].dates);
-			var formattedOnlineURL = HTMLonlineURL.replace("%data%", education.onlineCourses[course].url).replace("#", education.onlineCourses[course].url);
-
-			$(".education-entry:last").append(formattedOnlineTitle + formattedOnlineSchool);
-			$(".education-entry:last").append(formattedOnlineDates);
-			$(".education-entry:last").append(formattedOnlineURL);
 			}
 		}
 	}
-}
-
+};
 
 
 //Define function clickMetrics that locates all user clicks
